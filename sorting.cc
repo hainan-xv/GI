@@ -119,6 +119,40 @@ void heapSort(int *a, int n) {
   }
 }
 
+void merge(int *a, int mid, int n) {
+  int *p = new int[n];
+  int i = 0, j = mid;
+  int cur = 0;
+  while (i < mid && j < n) {
+    if (a[i] < a[j]) {
+      p[cur++] = a[i++];
+    }
+    else {
+      p[cur++] = a[j++];
+    }
+  }
+  while (i < mid) {
+    p[cur++] = a[i++];
+  }
+  while (j < n) {
+    p[cur++] = a[j++];
+  }
+
+  for (i = 0; i < n; i++) {
+    a[i] = p[i];
+  }
+
+  delete []p;
+}
+
+void mergeSort(int *a, int n) {
+  if (n < 2) return;
+  int mid = n / 2;
+  mergeSort(a, mid);
+  mergeSort(a + mid, n - mid);
+  merge(a, mid, n);
+}
+
 int main() {
   int size = 32;
   int *p = new int[size];
@@ -126,6 +160,6 @@ int main() {
   print(p, size);
   randomize(p, size);
   print(p, size);
-  heapSort(p, size);
+  mergeSort(p, size);
   print(p, size);
 }
