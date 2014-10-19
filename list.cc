@@ -94,6 +94,65 @@ list* quickSort(list* head) {
   return less;
 }
 
+list* merge(list *a, list *b) {
+  list *head = NULL;
+  list *tail = NULL;
+  if (a == NULL) {
+    return b;
+  }
+  else if (b == NULL) {
+    return a;
+  }
+  if (a->val < b->val) {
+    head = a;
+    a = a->next;
+  }
+  else {
+    head = b;
+    b = b->next;
+  }
+  tail = head;
+
+  while (a != NULL && b != NULL) {
+    if (a->val < b->val) {
+      tail->next = a;
+      a = a->next;
+    }
+    else {
+      tail->next = b;
+      b = b->next;
+    }
+    tail = tail->next;
+  }
+  if (a == NULL) {
+    tail->next = b;
+  }
+  if (b == NULL) {
+    tail->next = a;
+  }
+  return head;
+}
+    
+list* mergeSort(list *l) {
+  if (l == NULL || l->next == NULL) {
+    return l;
+  }
+  list *mid = l, *h = l;
+  bool even = 0;
+  while (h != NULL) {
+    h = h->next;
+    even = !even;
+    if (even) {
+      mid = mid->next;
+    }
+  }
+  list *b = mid->next;
+  mid->next = NULL;
+  l = mergeSort(l);
+  b = mergeSort(b);
+  return merge(l, b);
+}
+
 int main() {
   int a[SIZE];
   for (int i = 0; i < SIZE; i++) {
@@ -112,7 +171,7 @@ int main() {
 
   traverseList(r);
 
-  list *s = quickSort(r);
+  list *s = mergeSort(r);
 
   traverseList(s);
 
