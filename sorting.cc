@@ -58,7 +58,7 @@ int partition(int *a, int n) {
 }
 
 int select(int *a, int n, int i) {  // size is n, select i'th
-  if (i >= n) {
+  if (i >= n || i < 0) {
     cout << "bad" << endl;
   }
   if (n == 1) {
@@ -67,7 +67,7 @@ int select(int *a, int n, int i) {  // size is n, select i'th
   int p = partition(a, n);
   if (p == i) return a[p];
   else if (p < i) {
-    return select(a + p, n - p, i - p);
+    return select(a + p + 1, n - p - 1, i - p - 1);
   }
   else {
     return select(a, p, i);
