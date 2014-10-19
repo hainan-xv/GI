@@ -40,7 +40,7 @@ int LIS(int *a, int n) {  // longest monotonically increasing sebsequence
     int Max = 1;
     for (int j = 0; j < i; j++) {
       if (a[i] > a[j]) {
-        Max = max(Max, p[i] + 1);
+        Max = max(Max, p[j] + 1);
       }
     }
     p[i] = Max;
