@@ -41,7 +41,6 @@ void insertionSort(int *a, int n) {
     }
     a[j + 1] = m;
   }
-  checkSorted(a, n);
 }
 
 int partition(int *a, int n) {
@@ -162,6 +161,31 @@ void merge(int *a, int mid, int n) {
   delete []p;
 }
 
+void countingSort(int *a, int n, int k) {  // suppose every element in [0, k)
+  int *c = new int[k];
+  int *b = new int[n];
+  for (int i = 0; i < k; i++) {
+    c[i] = 0;
+  }
+  for (int i = 0; i < n; i++) {
+    c[a[i]]++;  // c[i] is the # occurence of i
+  }
+
+  for (int i = 1; i < k; i++) {
+    c[i] = c[i-1] + 1;
+  }
+
+  for (int j = n - 1; j >=0; j--) {
+    b[c[a[j]]] = a[j];
+    c[a[j]] --;
+  }
+  for (int i = 0; i < n; i++) {
+    a[i] = b[i];
+  }
+  delete []b;
+  delete []c;
+}
+
 void mergeSort(int *a, int n) {
   if (n < 2) return;
   int mid = n / 2;
@@ -171,16 +195,20 @@ void mergeSort(int *a, int n) {
 }
 
 int main() {
-  int size = 32;
+  int size = 5200;
   int *p = new int[size];
   initialize(p, size);
   print(p, size);
   randomize(p, size);
   print(p, size);
-  cout << select(p, size, 3) << endl;
-  cout << select(p, size, 13) << endl;
-  cout << select(p, size, 23) << endl;
-  cout << select(p, size, 8) << endl;
-  mergeSort(p, size);
+  for (int i = 0; i < 100; i++) {
+    int j = rand() % size;
+    if (j != select(p, size, j)) {
+      cout << "bad" << endl;
+    }
+  }
+  //mergeSort(p, size);
+  countingSort(p, size, size);
   print(p, size);
+  checkSorted(p, size);
 }
