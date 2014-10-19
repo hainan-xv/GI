@@ -3,7 +3,7 @@
 #include <stdlib.h>
 using namespace std;
 
-const int SIZE = 5;
+const int SIZE = 52;
 
 typedef struct _list {
   int val;
@@ -29,6 +29,15 @@ void traverseList(list* head) {
   cout << endl;
 }
 
+void freeList(list* head) {
+  if (head == NULL) {
+    return;
+  }
+  list *t = head->next;
+  delete head;
+  freeList(t);
+}
+
 list* reverseList(list* head) {
   if (head == NULL) {
     return NULL;
@@ -48,10 +57,51 @@ list* reverseList(list* head) {
   return b;
 }
 
+list* quickSort(list* head) {
+  if (head == NULL || head->next == NULL) {
+    return head;
+  }
+  list *pivot = head;
+  head = head->next;
+
+  list *less = NULL, *more = NULL;
+  while (head != NULL) {
+    list *head_next = head->next;
+    if (head->val < pivot->val) {
+      head->next = less;
+      less = head;
+    }
+    else {
+      head->next = more;
+      more = head;
+    }
+    head = head_next;
+  }
+
+  less = quickSort(less);
+  more = quickSort(more);
+  pivot->next = more;
+  
+  list *tail = less;
+  if (tail == NULL) {
+    return pivot;
+  }
+  while (tail->next != NULL) {
+    tail = tail->next;
+  }
+
+  tail->next = pivot;
+  return less;
+}
+
 int main() {
   int a[SIZE];
   for (int i = 0; i < SIZE; i++) {
     a[i] = i;
+  }
+
+  for (int i = 0; i < SIZE; i++) {
+    swap(a[i], a[rand() % SIZE]);
   }
 
   list *l = initializeFromArray(a, SIZE);
@@ -61,4 +111,9 @@ int main() {
   list *r = reverseList(l);
 
   traverseList(r);
+
+  list *s = quickSort(r);
+
+  traverseList(s);
+
 }
