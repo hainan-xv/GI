@@ -3,7 +3,7 @@
 #include <stdlib.h>
 using namespace std;
 
-const int SIZE = 52;
+const int SIZE = 32;
 
 typedef struct _list {
   int val;
@@ -138,12 +138,18 @@ list* mergeSort(list *l) {
     return l;
   }
   list *mid = l, *h = l;
-  bool even = 0;
+  bool wait = true;
+  bool even = true;
   while (h != NULL) {
     h = h->next;
     even = !even;
     if (even) {
-      mid = mid->next;
+      if (wait) {
+        wait = false;
+      }
+      else {
+        mid = mid->next;
+      }
     }
   }
   list *b = mid->next;
