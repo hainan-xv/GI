@@ -57,6 +57,23 @@ int partition(int *a, int n) {
   return div;
 }
 
+int select(int *a, int n, int i) {  // size is n, select i'th
+  if (i >= n) {
+    cout << "bad" << endl;
+  }
+  if (n == 1) {
+    return a[0];
+  }
+  int p = partition(a, n);
+  if (p == i) return a[p];
+  else if (p < i) {
+    return select(a + p, n - p, i - p);
+  }
+  else {
+    return select(a, p, i);
+  }
+}
+
 void quickSort(int *a, int n) {
   if (n < 2) return;
   int p = partition(a, n);
@@ -160,6 +177,10 @@ int main() {
   print(p, size);
   randomize(p, size);
   print(p, size);
+  cout << select(p, size, 3) << endl;
+  cout << select(p, size, 13) << endl;
+  cout << select(p, size, 23) << endl;
+  cout << select(p, size, 8) << endl;
   mergeSort(p, size);
   print(p, size);
 }
