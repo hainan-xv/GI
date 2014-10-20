@@ -24,6 +24,7 @@ recursion
 - permutation
 - all sub string
 - n-queen
+- reg exp matching
 
 tree
 - serialization
@@ -31,7 +32,6 @@ tree
 
 
 TODO:
-- reg exp matching
 - integer base conversion
 - tree traversals
 - reconstruct tree from pre/in-order traversals
