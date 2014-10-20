@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#include <stack>
 
 typedef struct _treeNode {
   _treeNode() {
@@ -11,10 +12,79 @@ typedef struct _treeNode {
   _treeNode *R;
 } treeNode;
 
-/*
-3 ()()
+void preOrder(treeNode *root) {
+  stack<treeNode*> s;
+  s.push(root);
+  while (s.size() != 0) {
+    treeNode *t = s.top();
+    s.pop();
+    cout << t->val << ' ';
+    if (t->R != NULL) {
+      s.push(t->R);
+    }
+    if (t->L != NULL) {
+      s.push(t->L);
+    }
+  }
+  cout << endl;
+}
 
-//*/
+void inOrder(treeNode *root) {
+  stack<treeNode*> s;
+  treeNode *t = root;
+  while (t != NULL) {
+    s.push(t);
+    t = t->L;
+  }
+  while (s.size() != 0) {
+    treeNode *h = s.top();
+    s.pop();
+    cout << h->val << ' ';
+    t = h->R;
+    while (t != NULL) {
+      s.push(t);
+      t = t->L;
+    }
+  }
+  cout << endl;
+}
+
+void postOrder(treeNode *root) {
+  stack<treeNode*> s;
+  treeNode *t = root;
+  while (t != NULL) {
+    s.push(t);
+    if (t->L != NULL) {
+      t = t->L;
+    }
+    else {
+      t = t->R;
+    }
+  }
+  while (s.size() != 0) {
+    treeNode *h = s.top();
+    s.pop();
+    cout << h->val << ' ';
+    if (s.size() != 0) {
+      t = s.top();
+      if (t->R == h) {
+        continue;
+      }
+      t = t->R;
+      while (t != NULL) {
+        s.push(t);
+        if (t->L != NULL) {
+          t = t->L;
+        }
+        else {
+          t = t->R;
+        }
+      }
+    }
+  }
+  cout << endl;
+}
+
 string toString(treeNode *root) {
   if (root == NULL) {
     return "()";
@@ -55,6 +125,7 @@ treeNode* fromString(string s) {
   return fromString(s, i);
 }
 
+
 int main() {
   treeNode *root = new treeNode();
   treeNode *a = new treeNode();
@@ -64,6 +135,10 @@ int main() {
   b->val = "b";
   root->L = a;
   root->R = b;
+
+  preOrder(root);
+  inOrder(root);
+  postOrder(root);
 
   string ans = toString(root);
 
