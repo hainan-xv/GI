@@ -28,12 +28,11 @@ recursion
 
 tree
 - serialization
-
+- tree traversals
 
 
 TODO:
 - integer base conversion
-- tree traversals
 - reconstruct tree from pre/in-order traversals
 - max consecutive sum in array
 
