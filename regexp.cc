@@ -37,8 +37,8 @@ bool match(string a, int i, int sa,
   }
   else if (r[j + 1] == '*') {
     for (int k = i; k < sa; k++) {
-      bool m1 = match(a, i, k, r, j, 2);
-      bool m2 = match(a, k, sa, r, 2, sr);
+      bool m1 = match(a, i, k, r, j, j + 2);
+      bool m2 = match(a, k, sa, r, j + 2, sr);
       if (m1 && m2) {
         return true;
       }
