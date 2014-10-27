@@ -20,10 +20,10 @@ double search(int A[], int m, int B[], int n, int k) {
       return a;
     }
     else if (a > b) {
-      return search(A, m - da, B + db, n - db, k - db);
+      return search(A, m, B + db, n - db, k - db);
     }
     else {
-      return search(A + da, m - da, B, n - db, k - da);
+      return search(A + da, m - da, B, n, k - da);
     }
   }
   else { // k / 2 > n
@@ -34,10 +34,10 @@ double search(int A[], int m, int B[], int n, int k) {
       return a;
     }
     else if (a > b) {
-      return search(A, m - da, B + db, n - db, k - db);
+      return search(A, m, B + db, n - db, k - db);
     }
     else {
-      return search(A + da, m - da, B, n - db, k - da);
+      return search(A + da, m - da, B, n, k - da);
     }
   }
   
